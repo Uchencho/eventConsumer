@@ -12,10 +12,13 @@ clean:
 	rm -f $(ZIPFILE)
 	rm -f $(PACKAGED_TEMPLATE)
 
+.PHONY: test
+test:
+	python -m unittest discover -s internal/app
+
 
 .PHONY: package
 package:
 	@echo ">>> Using aws sam to deploy"
 	sam build
 	sam deploy --guided
-

@@ -1,25 +1,23 @@
-import os
+import os, boto3
 import pandas as pd
 
 class S3Client:
 
     s3_client = None
-    source_bucket_name = os.getenv('aws_access_key_id')
+    source_bucket_name = os.getenv('BUCKET_NAME')
+    boto_resource = ""
 
     def __init__(self):
         """
         initializes an s3 client from environment variables
 
         """
-        aws_access_key_id = os.environ['aws_access_key_id']
-        aws_secret_access_key = os.environ['aws_secret_access_key']
+        aws_access_key_id = os.getenv('aws_access_key_id')
+        aws_secret_access_key = os.getenv('aws_secret_access_key')
         if not aws_access_key_id or not aws_secret_access_key:
             raise EnvironmentError("aws_access_key_id and aws_secret_access_key is needed to run this function")
         try:
-            # client = boto3.client(boto_resource, region_name='us-east-1', aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
-            # return client
-            # s3_client = client # set the returned client to s3 client
-            print("Initializing client...")
+            s3_client = boto3.client(self.boto_resource, region_name='us-east-1', aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
         except Exception as error:
             print('client - Error initializing boto client for s3: ' + repr(error))
             raise
