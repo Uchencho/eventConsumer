@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "eventPythonConsumer"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1mr0mr690bsox"
+s3_prefix = "eventPythonConsumer"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "Stage=\"staging\" ServiceName=\"eventConsumer\""
