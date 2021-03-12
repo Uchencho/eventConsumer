@@ -1,5 +1,5 @@
 from internal.workflow.main import get_file_details
-
+from internal.client.main import S3Client
 
 class App:
 
@@ -9,6 +9,9 @@ class App:
 
     def __init__(self, appName):
         print("Initializing with ", appName)
+
+        new_client = S3Client()
+        print(new_client) # Rather than printing, you would pass this into workflow
 
 
     def consume(self, event_key):
