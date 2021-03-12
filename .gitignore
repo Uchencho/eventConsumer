@@ -3,3 +3,4 @@
 *.pyc
 __pycache__/
 .aws-sam/
+.env
