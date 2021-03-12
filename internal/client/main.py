@@ -36,7 +36,7 @@ class S3Client:
         try:
             obj = self.s3_client.get_object(Bucket = source_bucket_name, Key = file_read_name)
         except Exception as error:
-            print("The previous month's updates csv was not found in the source folder path:" + repr(error))
+            print(f"client - unable to get object from bucket {source_bucket_name} and key {file_read_name}" + repr(error))
             raise
         try:
             df = pd.read_csv(obj['Body'])
