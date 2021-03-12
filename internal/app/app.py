@@ -1,4 +1,4 @@
-from internal.workflow.workflow import get_file_details
+from internal.workflow.main import get_file_details
 
 
 class App:

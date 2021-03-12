@@ -1,0 +1,78 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    OpenApiVersion: 3.0.1
+
+Parameters:
+  Stage:
+    Type: String
+    Default: staging
+
+  ServiceName:
+    Type: String
+    Default: eventConsumer
+
+  # ArtifactStore:
+  #   Description: S3 Bucket, which will hold the artifacts and open api specs
+  #   Type: String
+  #   Default: uchenchostorage
+
+
+Resources:
+
+  EventS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub event-consumer-${Stage}
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Function:
+              "Fn::GetAtt":
+                - "Function"
+                - "Arn"
+            Event: s3:ObjectCreated:*
+
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ''
+      Handler: main.main
+      Timeout: 180
+      MemorySize: 512
+      Runtime: python3.6
+      FunctionName: !Sub ${ServiceName}-${Stage}
+      Environment:
+        Variables:
+          SERVICE_NAME: eventConsumer
+      Policies:
+        - VPCAccessPolicy: {}
+        - S3ReadPolicy:
+            BucketName: !Sub event-consumer-${Stage}
+      Events:
+        s3Upload:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: EventS3Bucket
+            Events: s3:ObjectCreated:*
+        
+
+Outputs:
+  FunctionName:
+    Description: Service function name
+    Value: !Sub ${ServiceName}-${Stage}
+    Export:
+      Name: !Sub ${ServiceName}-name
+  FunctionArn:
+    Description: Service Service Function ARN
+    Value: !GetAtt Function.Arn
+    Export:
+      Name: !Sub ${ServiceName}-arn
+  EventS3BucketName:
+    Value: !Ref EventS3Bucket
+    Export:
+      Name: event-consumer
