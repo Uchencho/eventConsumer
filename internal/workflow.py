@@ -33,7 +33,8 @@ def zip_file_for_s3(file_id):
         id: file_id (str)
     """
     print("zipping file...")
-    zf = ZipFile(file_id, 'w')
+    print('path is ', f'/tmp/{file_id}')
+    zf = ZipFile(f'/tmp/{file_id}', 'w')
     for f in os.listdir('/tmp/'):
         print("File found is: ", f)
         if f.endswith("txt"):

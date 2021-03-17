@@ -62,8 +62,8 @@ class S3Client:
         """
         print('writing to s3 bucket')
         try:
-            self.s3_client.upload_file(f'/tmp/{filename}', self.transformed_bucket,
-            extra_args={
+            self.s3_client.upload_file(f'/tmp/{filename}', self.transformed_bucket, filename,
+            ExtraArgs={
                 'Metadata': {'clientFilename': filename},
                 'ContentType' : 'application/zip, application/octet-stream',
                 }
