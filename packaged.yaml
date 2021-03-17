@@ -26,7 +26,7 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://uchenchostorage/ce58a332cd7e22752ae71ebc85afc251
+      CodeUri: s3://uchenchostorage/fa5287183e862be8b8f19a371820c5cb
       Handler: main.main
       Timeout: 180
       MemorySize: 512

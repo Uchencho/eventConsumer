@@ -1,4 +1,3 @@
-import pandas as pd
 from zipfile import ZipFile
 import os
 
@@ -13,14 +12,14 @@ def get_file_details(filename, s3_client):
 
     print("File received: ", filename)
 
-    df = s3_client.read_prev_data_updates(filename)
+    s3_client.read_prev_data_updates(filename)
 
-    if df.shape == 0:
-        raise IndexError(f"Shape of file {filename} cannot be zero")
+    # if df.shape == 0:
+    #     raise IndexError(f"Shape of file {filename} cannot be zero")
 
-    print("Shape of the file is: ", df.shape)
-    print("File contains these columns: ", df.columns)
-    df["owing_column"] = "not - owing"
+    # print("Shape of the file is: ", df.shape)
+    # print("File contains these columns: ", df.columns)
+    # df["owing_column"] = "not - owing"
 
     zip_file_for_s3('586863f5-836c-40ee-8d99-de983c22eeb9')
 
@@ -35,8 +34,10 @@ def zip_file_for_s3(file_id):
     """
     print("zipping file...")
     zf = ZipFile(file_id, 'w')
-    for f in os.listdir('/tmp'):
-        if f.endswith("csv"):
+    for f in os.listdir('/tmp/'):
+        print("File found is: ", f)
+        if f.endswith("txt"):
+            print("Attempting to write ", '/tmp/'+f)
             zf.write('/tmp/'+f)
     zf.close()
     print("Zipped file successfully")

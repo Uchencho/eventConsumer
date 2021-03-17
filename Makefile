@@ -24,6 +24,7 @@ package:
 	# sam deploy --guided
 	rm -rf .aws-sam
 	rm -rf package
+	rm -rf packaged.yaml
 	pip install --target package/python -r requirements.txt
 	aws cloudformation package --template-file $(TEMPLATE) --s3-bucket uchenchostorage --output-template-file $(PACKAGED_TEMPLATE)
 	aws cloudformation deploy --template-file $(PACKAGED_TEMPLATE) --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM

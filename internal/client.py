@@ -1,5 +1,5 @@
 import os, boto3
-import pandas as pd
+# import pandas as pd
 
 class S3Client:
 
@@ -13,12 +13,13 @@ class S3Client:
         initializes an s3 client from environment variables
 
         """
+        print("initializing s3 client")
         # aws_access_key_id = os.getenv('aws_access_key_id')
         # aws_secret_access_key = os.getenv('aws_secret_access_key')
         # if not aws_access_key_id or not aws_secret_access_key:
         #     raise EnvironmentError("aws_access_key_id and aws_secret_access_key is needed to run this function")
         try:
-            s3_client = boto3.client("s3", region_name='us-east-1')
+            self.s3_client = boto3.client("s3", region_name='us-east-1')
         except Exception as error:
             print('client - Error initializing boto client for s3: ' + repr(error))
             raise
@@ -33,17 +34,25 @@ class S3Client:
             df: pandas dataFrame
         """
         try:
-            obj = self.s3_client.get_object(Bucket = self.source_bucket_name, Key = self.file_read_name)
+            obj = self.s3_client.get_object(Bucket = self.source_bucket_name, Key = file_read_name)
+            print("Object returned is ", obj)
+            print('writing to csv file...')
+            with open("/tmp/hello.txt","w+") as f:
+                f.write('Hello world')
+            
+            print('finished writing')
+            
         except Exception as error:
-            print(f"client - unable to get object from bucket {self.source_bucket_name} and key {self.file_read_name}" + repr(error))
+            print(f"client - unable to get object from bucket {self.source_bucket_name} and key {file_read_name}" + error)
             raise
-        try:
-            df = pd.read_csv(obj['Body'])
-        except Exception as e:
-            print('client - unable to read file ', self.file_read_name)
-            raise
+        # try:
+        #     df = pd.read_csv(obj['Body'])
+        # except Exception as e:
+        #     print('client - unable to read file ', self.file_read_name)
+        #     raise
+        
 
-        return df
+        # return df
 
 
     def write_to_s3(self, filename):
