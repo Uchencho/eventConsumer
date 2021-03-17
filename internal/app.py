@@ -1,5 +1,5 @@
-from internal.workflow.main import get_file_details
-from internal.client.main import S3Client
+from internal.workflow import get_file_details
+from internal.client import S3Client
 
 class App:
 

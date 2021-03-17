@@ -1,6 +1,6 @@
 from unittest import TestCase
 import pandas as pd
-from internal.app.app import App
+from internal.app import App
 
 
 class MockS3Client:
