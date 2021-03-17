@@ -47,11 +47,14 @@ Resources:
       FunctionName: !Sub ${ServiceName}-${Stage}
       Environment:
         Variables:
-          SERVICE_NAME: eventConsumer
+          SOURCE_BUCKET: !Sub event-consumer-${Stage}
+          TRANSFORMED_BUCKET: uchenchostorage
       Policies:
         - VPCAccessPolicy: {}
         - S3ReadPolicy:
             BucketName: !Sub event-consumer-${Stage}
+        - S3WritePolicy:
+            BucketName: uchenchostorage
       Events:
         s3Upload:
           Type: S3

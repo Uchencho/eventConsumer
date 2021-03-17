@@ -19,6 +19,8 @@ test:
 
 .PHONY: package
 package:
-	@echo ">>> Using aws sam to deploy"
-	sam build
-	sam deploy --guided
+	@echo ">>> Packaging with cloud formation"
+	# sam build
+	# sam deploy --guided
+	aws cloudformation package --template-file $(TEMPLATE) --s3-bucket uchenchostorage --output-template-file $(PACKAGED_TEMPLATE)
+	aws cloudformation deploy --template-file $(PACKAGED_TEMPLATE) --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM
