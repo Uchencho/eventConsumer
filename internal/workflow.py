@@ -38,8 +38,7 @@ def zip_file_for_s3(file_id):
     for f in os.listdir('/tmp/'):
         print("File found is: ", f)
         if f.endswith("txt"):
-            print("Attempting to write ", '/tmp/'+f)
-            zf.write('/tmp/'+f)
+            zf.write(f)
     zf.close()
     print("Zipped file successfully")
 
