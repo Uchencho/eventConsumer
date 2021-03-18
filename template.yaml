@@ -16,11 +16,6 @@ Parameters:
     Type: String
     Default: eventConsumer
 
-  # ArtifactStore:
-  #   Description: S3 Bucket, which will hold the artifacts and open api specs
-  #   Type: String
-  #   Default: uchenchostorage
-
 
 Resources:
 
@@ -64,7 +59,7 @@ Resources:
             Events: s3:ObjectCreated:*
       Layers:
         - !Ref libs
-        - "arn:aws:lambda:us-east-1:668099181075:layer:AWSLambda-Python36-SciPy1x:37"
+        - "arn:aws:lambda:us-east-1:XXXXXXXXXXXX:layer:AWSLambda-Python36-SciPy1x:37"
 
   libs:
     Type: AWS::Serverless::LayerVersion
@@ -90,3 +85,8 @@ Outputs:
     Value: !Ref EventS3Bucket
     Export:
       Name: event-consumer
+  PandasLibrary:
+    Value: !Ref libs
+    Export:
+      Name: pandas-lib
+
