@@ -19,7 +19,7 @@ clean:
 
 .PHONY: test
 test:
-	python -m unittest discover -s internal/app
+	# python -m unittest discover -s internal
 
 .PHONY: lambda
 lambda:
@@ -33,7 +33,10 @@ build: clean lambda
 
 .PHONY: cleanExternal
 cleanExternal:
-	rm -r -f external/numpy* external/six* external/dateutil external/python_dateutil-2.8.1.dist-info
+	rm -rf external/python/lib/$(RUNTIME)/site-packages/numpy* 
+	rm -rf external/python/lib/$(RUNTIME)/site-packages/six* 
+	rm -rf external/python/lib/$(RUNTIME)/site-packages/dateutil 
+	rm -rf external/python/lib/$(RUNTIME)/site-packages/python_dateutil-2.8.1.dist-info
 
 
 .PHONY: package

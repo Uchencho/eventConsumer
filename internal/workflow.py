@@ -20,6 +20,7 @@ def get_file_details(filename, s3_client):
     print("Shape of the file is: ", df.shape)
     print("File contains these columns: ", df.columns)
     df["owing_column"] = "not - owing"
+    df.to_csv(f'/tmp/{filename}.csv', index=False)
 
     zip_file_for_s3('586863f5-836c-40ee-8d99-de983c22eeb9')
 

@@ -32,11 +32,6 @@ class S3Client:
         try:
             obj = self.s3_client.get_object(Bucket = self.source_bucket_name, Key = file_read_name)
             df = pd.read_csv(obj['Body'])
-            # print("Object returned is ", obj)
-            # print('writing to csv file...')
-            # with open("/tmp/hello.txt","w+") as f:
-            #     f.write('Hello world')
-            
             print('finished writing')
             
         except Exception as error:
@@ -61,8 +56,8 @@ class S3Client:
         try:
             self.s3_client.upload_file(f'/tmp/{filename}', self.transformed_bucket, filename,
             ExtraArgs={
-                'Metadata': {'clientFilename': filename},
-                'ContentType' : 'application/zip, application/octet-stream',
+                'Metadata': {'-clientFilename': filename},
+                'ContentType' : 'application/zip',
                 }
             )
         except Exception as e:
