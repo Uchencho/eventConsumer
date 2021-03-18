@@ -1,5 +1,5 @@
 import os, boto3
-# import pandas as pd
+import pandas as pd
 
 class S3Client:
 
@@ -14,10 +14,6 @@ class S3Client:
 
         """
         print("initializing s3 client")
-        # aws_access_key_id = os.getenv('aws_access_key_id')
-        # aws_secret_access_key = os.getenv('aws_secret_access_key')
-        # if not aws_access_key_id or not aws_secret_access_key:
-        #     raise EnvironmentError("aws_access_key_id and aws_secret_access_key is needed to run this function")
         try:
             self.s3_client = boto3.client("s3", region_name='us-east-1')
         except Exception as error:
@@ -35,10 +31,11 @@ class S3Client:
         """
         try:
             obj = self.s3_client.get_object(Bucket = self.source_bucket_name, Key = file_read_name)
-            print("Object returned is ", obj)
-            print('writing to csv file...')
-            with open("/tmp/hello.txt","w+") as f:
-                f.write('Hello world')
+            df = pd.read_csv(obj['Body'])
+            # print("Object returned is ", obj)
+            # print('writing to csv file...')
+            # with open("/tmp/hello.txt","w+") as f:
+            #     f.write('Hello world')
             
             print('finished writing')
             
@@ -52,7 +49,7 @@ class S3Client:
         #     raise
         
 
-        # return df
+        return df
 
 
     def write_to_s3(self, filename):

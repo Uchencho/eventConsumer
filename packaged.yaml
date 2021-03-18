@@ -26,7 +26,7 @@ Resources:
   Function:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://uchenchostorage/0806c6639f9a2f976dd74cf7dcb6976a
+      CodeUri: s3://uchenchostorage/5b613c635b1da41e69d5cc2b01b511df
       Handler: main.main
       Timeout: 180
       MemorySize: 512
@@ -52,6 +52,17 @@ Resources:
             Bucket:
               Ref: EventS3Bucket
             Events: s3:ObjectCreated:*
+      Layers:
+      - Ref: libs
+      - arn:aws:lambda:us-east-1:668099181075:layer:AWSLambda-Python36-SciPy1x:37
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: pandas-lib
+      Description: pandas dependency.
+      ContentUri: s3://uchenchostorage/e88f9df0364bbedeb164caa3abf6013b
+      CompatibleRuntimes:
+      - python3.6
 Outputs:
   FunctionName:
     Description: Service function name

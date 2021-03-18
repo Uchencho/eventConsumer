@@ -22,9 +22,14 @@ package:
 	@echo ">>> Packaging with cloud formation"
 	# sam build
 	# sam deploy --guided
-	rm -rf .aws-sam
-	rm -rf package
-	rm -rf packaged.yaml
-	pip install --target package/python -r requirements.txt
+	# rm -rf .aws-sam
+	# rm -rf package
+	# rm -rf external
+	# rm -rf packaged.yaml
+	# mkdir -p package/python/lib/python3.6/site-packages
+	# mkdir -p external/python/lib/python3.6/site-packages
+	# # pip install --target package/python -r requirements.txt
+	# pip install --target package/python/lib/python3.6/site-packages/. -r requirements.txt
+	# pip install pandas -t external/python/lib/python3.6/site-packages/.
 	aws cloudformation package --template-file $(TEMPLATE) --s3-bucket uchenchostorage --output-template-file $(PACKAGED_TEMPLATE)
 	aws cloudformation deploy --template-file $(PACKAGED_TEMPLATE) --stack-name $(STACK_NAME) --capabilities CAPABILITY_IAM

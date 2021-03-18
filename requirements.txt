@@ -1,7 +1,2 @@
-botocore==1.20.26
-jmespath==0.10.0
 python-dateutil==2.8.1
 pytz==2021.1
-s3transfer==0.3.4
-six==1.15.0
-urllib3==1.26.3
